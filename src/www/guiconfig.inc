@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2014-2021 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2014-2021 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2014 Deciso B.V.
  * Copyright (C) 2010 Ermal Luçi
  * Copyright (C) 2005-2006 Colin Smith <ethethlay@gmail.com>
@@ -57,7 +57,7 @@ function html_safe($text)
 
 function cache_safe($url)
 {
-    $info = stat('/usr/local/opnsense/www/index.php');
+    $info = stat('/usr/local/yetisense/www/index.php');
     if (!empty($info['mtime'])) {
         return "{$url}?v=" . substr(md5($info['mtime']), 0, 16);
     }
@@ -95,14 +95,14 @@ function get_themed_filename($url, $exists = false)
 {
     global $config;
 
-    $theme = 'opnsense';
+    $theme = 'yetisense';
 
-    if (isset($config['theme']) && is_dir('/usr/local/opnsense/www/themes/' . $config['theme'])) {
+    if (isset($config['theme']) && is_dir('/usr/local/yetisense/www/themes/' . $config['theme'])) {
         $theme = $config['theme'];
     }
 
     foreach (["/themes/{$theme}/build/", '/'] as $pattern) {
-        $filename = "/usr/local/opnsense/www{$pattern}{$url}";
+        $filename = "/usr/local/yetisense/www{$pattern}{$url}";
         if (file_exists($filename)) {
             return $exists ? true : str_replace('//', '/', "/ui{$pattern}{$url}");
         }
@@ -503,9 +503,9 @@ function service_control_icon($service, $xs = false)
     $output = '';
 
     if (service_status($service)) {
-        $output .= '<span class="label label-opnsense label-opnsense-%s label-success"><i class="fa fa-play fa-fw"></i></span>' . PHP_EOL;
+        $output .= '<span class="label label-yetisense label-yetisense-%s label-success"><i class="fa fa-play fa-fw"></i></span>' . PHP_EOL;
     } else {
-        $output .= '<span class="label label-opnsense label-opnsense-%s label-danger"><i class="fa fa-stop fa-fw"></i></span>' . PHP_EOL;
+        $output .= '<span class="label label-yetisense label-yetisense-%s label-danger"><i class="fa fa-stop fa-fw"></i></span>' . PHP_EOL;
     }
 
     return sprintf($output, $xs ? 'xs' : 'sm');

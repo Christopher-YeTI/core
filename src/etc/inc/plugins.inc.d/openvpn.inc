@@ -2,7 +2,7 @@
 
 /*
  * Copyright (C) 2016-2023 Deciso B.V.
- * Copyright (C) 2015-2022 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2015-2022 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2008 Scott Ullrich <sullrich@gmail.com>
  * Copyright (C) 2006 Fernando Lemos
  * Copyright (C) 2005 Peter Allgeyer <allgeyer@web.de>
@@ -72,7 +72,7 @@ function openvpn_services()
         }
     }
 
-    foreach ((new OPNsense\OpenVPN\OpenVPN())->Instances->Instance->iterateItems() as $key => $node) {
+    foreach ((new YETIsense\OpenVPN\OpenVPN())->Instances->Instance->iterateItems() as $key => $node) {
         if (!empty((string)$node->enabled)) {
             $services[] = [
                 'description' => "OpenVPN {$node->role} " . htmlspecialchars($node->description),
@@ -94,7 +94,7 @@ function openvpn_services()
 function openvpn_interfaces()
 {
     $interfaces = [];
-    if ((new OPNsense\OpenVPN\OpenVPN())->isEnabled()) {
+    if ((new YETIsense\OpenVPN\OpenVPN())->isEnabled()) {
         $interfaces['openvpn'] = [
             'enable' => true,
             'if' => 'openvpn',
@@ -125,7 +125,7 @@ function openvpn_devices()
         }
     }
 
-    foreach ((new OPNsense\OpenVPN\OpenVPN())->Instances->Instance->iterateItems() as $key => $node) {
+    foreach ((new YETIsense\OpenVPN\OpenVPN())->Instances->Instance->iterateItems() as $key => $node) {
         $mode = ((string)$node->role)[0];
         $name = "ovpn{$mode}{$node->vpnid}";
         $names[$name] = [
@@ -151,7 +151,7 @@ function openvpn_xmlrpc_sync()
 
     $result[] = array(
         'description' => gettext('OpenVPN'),
-        'section' => 'openvpn,OPNsense.OpenVPN',
+        'section' => 'openvpn,YETIsense.OpenVPN',
         'id' => 'openvpn',
         'services' => ["openvpn"],
     );
@@ -212,7 +212,7 @@ function openvpn_create_key()
 
 function openvpn_vpnid_next()
 {
-    $vpnids = (new OPNsense\OpenVPN\OpenVPN())->usedVPNIds();
+    $vpnids = (new YETIsense\OpenVPN\OpenVPN())->usedVPNIds();
     for ($vpnid = 1; true; $vpnid++) {
         if (!in_array($vpnid, $vpnids)) {
             return $vpnid;
@@ -485,7 +485,7 @@ function openvpn_reconfigure($mode, $settings, $device_only = false)
         } else {
             /**
              * XXX: DCO uses non standard matching, normally create should use "ifconfig ovpnX create"
-             * ref: https://github.com/opnsense/src/blob/b0130349e8/sys/net/if_ovpn.c#L2392-L2400
+             * ref: https://github.com/yetisense/src/blob/b0130349e8/sys/net/if_ovpn.c#L2392-L2400
              */
             mwexecf('/sbin/ifconfig %s create', array($devname));
         }
@@ -567,20 +567,20 @@ function openvpn_reconfigure($mode, $settings, $device_only = false)
         switch ($settings['mode']) {
             case 'server_user':
             case 'server_tls_user':
-                $conf .= "client-disconnect \"/usr/local/opnsense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
+                $conf .= "client-disconnect \"/usr/local/yetisense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
                 break;
             case 'server_tls':
                 // For non user auth types setup client specific overrides,
                 // user authenticated ones are commissioned using the auth
                 // script in option auth-user-pass-verify.
-                $conf .= "client-connect \"/usr/local/opnsense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
+                $conf .= "client-connect \"/usr/local/yetisense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
                 break;
             case 'p2p_tls':
                 // same as server_tls, but only valid if cidr < 30, without
                 // server directive client-connect is not valid.
                 // XXX: IPv6 is likely flawed, see "server" directive too.
                 if (!empty($ip) && !empty($mask) && ($cidr < 30)) {
-                    $conf .= "client-connect \"/usr/local/opnsense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
+                    $conf .= "client-connect \"/usr/local/yetisense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
                 }
                 break;
             default:
@@ -682,13 +682,13 @@ function openvpn_reconfigure($mode, $settings, $device_only = false)
                     $conf .= "username-as-common-name\n";
                 }
                 if (!empty($settings['authmode'])) {
-                    $conf .= "auth-user-pass-verify \"/usr/local/opnsense/scripts/openvpn/ovpn_event.py --defer '{$vpnid}'\" via-env\n";
-                    $conf .= "learn-address \"/usr/local/opnsense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
+                    $conf .= "auth-user-pass-verify \"/usr/local/yetisense/scripts/openvpn/ovpn_event.py --defer '{$vpnid}'\" via-env\n";
+                    $conf .= "learn-address \"/usr/local/yetisense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
                 }
                 break;
         }
         if ($mode == 'server' && (strstr($settings['mode'], 'tls'))) {
-            $conf .= "tls-verify \"/usr/local/opnsense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
+            $conf .= "tls-verify \"/usr/local/yetisense/scripts/openvpn/ovpn_event.py '{$vpnid}'\"\n";
         }
 
         // The local port to listen on
@@ -1059,7 +1059,7 @@ function openvpn_csc_conf_write($settings, $server, $target_filename = null)
 
 function openvpn_prepare($device)
 {
-    $settings = (new OPNsense\OpenVPN\OpenVPN())->getInstanceById(preg_replace('/[^0-9]/', '', $device));
+    $settings = (new YETIsense\OpenVPN\OpenVPN())->getInstanceById(preg_replace('/[^0-9]/', '', $device));
     if (empty($settings)) {
         return null;
     }
@@ -1285,7 +1285,7 @@ function openvpn_refresh_crls()
             }
         }
     }
-    foreach ((new OPNsense\OpenVPN\OpenVPN())->Instances->Instance->iterateItems() as $key => $node) {
+    foreach ((new YETIsense\OpenVPN\OpenVPN())->Instances->Instance->iterateItems() as $key => $node) {
         if (!empty((string)$node->enabled) && !empty((string)$node->crl)) {
             $fpath = "/var/etc/openvpn/server-{$key}.crl-verify";
             $crl = lookup_crl((string)$node->crl);

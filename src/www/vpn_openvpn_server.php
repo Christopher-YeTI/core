@@ -664,7 +664,7 @@ $( document ).ready(function() {
             <section class="col-xs-12">
               <div class="tab-content content-box col-xs-12">
                 <div class="table-responsive">
-                  <table class="table table-striped opnsense_standard_table_form">
+                  <table class="table table-striped yetisense_standard_table_form">
                     <tr>
                       <td style="width:22%"><strong><?=gettext("General information"); ?></strong></td>
                       <td style="width:78%; text-align:right">
@@ -841,7 +841,7 @@ $( document ).ready(function() {
             <section class="col-xs-12">
               <div class="tab-content content-box col-xs-12">
                 <div class="table-responsive">
-                  <table class="table table-striped opnsense_standard_table_form">
+                  <table class="table table-striped yetisense_standard_table_form">
                     <tr>
                       <td colspan="2"><strong><?=gettext("Cryptographic Settings"); ?></strong></td>
                     </tr>
@@ -1088,7 +1088,7 @@ $( document ).ready(function() {
           <section class="col-xs-12">
             <div class="tab-content content-box col-xs-12">
               <div class="table-responsive">
-                <table class="table table-striped opnsense_standard_table_form">
+                <table class="table table-striped yetisense_standard_table_form">
                     <tr>
                       <td colspan="2"><strong><?=gettext("Tunnel Settings"); ?></strong></td>
                     </tr>
@@ -1326,7 +1326,7 @@ $( document ).ready(function() {
             <section class="col-xs-12">
               <div class="tab-content content-box col-xs-12">
                 <div class="table-responsive">
-                  <table class="table table-striped opnsense_standard_table_form">
+                  <table class="table table-striped yetisense_standard_table_form">
                     <tr>
                       <td colspan="2"><strong><?=gettext("Client Settings"); ?></strong></td>
                     </tr>
@@ -1553,7 +1553,7 @@ $( document ).ready(function() {
             <section class="col-xs-12">
               <div class="tab-content content-box col-xs-12">
                 <div class="table-responsive">
-                  <table class="table table-striped opnsense_standard_table_form">
+                  <table class="table table-striped yetisense_standard_table_form">
                     <tr>
                       <td colspan="2"><strong><?=gettext("Advanced configuration"); ?></strong></td>
                     </tr>

@@ -460,7 +460,7 @@ include("head.inc");
             <form method="post" name="iform" id="iform">
               <div class="tab-content content-box col-xs-12 __mb">
                 <div class="table-responsive">
-                  <table class="table table-striped opnsense_standard_table_form">
+                  <table class="table table-striped yetisense_standard_table_form">
                     <thead>
                       <tr>
                         <td style="width:22%"><strong><?=gettext("PPPs configuration");?></strong></td>

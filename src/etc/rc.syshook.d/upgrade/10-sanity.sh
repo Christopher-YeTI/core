@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CORE=$(opnsense-version -n)
+CORE=$(yetisense-version -n)
 
 if [ -z "${CORE}" ]; then
 	echo "Could not determine core package name."

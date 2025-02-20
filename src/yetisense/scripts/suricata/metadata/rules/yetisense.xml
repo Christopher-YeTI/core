@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset documentation_url="https://github.com/yetisense/rules">
+    <location url="https://rulesets.yetisense.org/suricata/" prefix="YETIsense-App-detect"/>
+    <files>
+        <file description="test">yetisense.test.rules</file>
+        <file description="file-transfer">yetisense.file_transfer.rules</file>
+        <file description="mail">yetisense.mail.rules</file>
+        <file description="media-streaming">yetisense.media_streaming.rules</file>
+        <file description="messaging">yetisense.messaging.rules</file>
+        <file description="social-networking">yetisense.social_media.rules</file>
+        <file description="uncategorized">yetisense.uncategorized.rules</file>
+    </files>
+</ruleset>

@@ -2,7 +2,7 @@
 <wizard>
     <copyright><![CDATA[
 /*
-    Copyright (C) 2015-2017 Franco Fichtner <franco@opnsense.org>
+    Copyright (C) 2015-2017 Franco Fichtner <franco@yetisense.org>
     Copyright (C) 2014 Deciso B.V.
     Copyright (C) 2004-2005 Scott Ullrich <sullrich@gmail.com>
     All rights reserved.
@@ -114,19 +114,19 @@
                 <name>Enable Resolver</name>
                 <type>checkbox</type>
                 <value>yes</value>
-                <bindstofield>OPNsense->unboundplus->general->enabled</bindstofield>
+                <bindstofield>YETIsense->unboundplus->general->enabled</bindstofield>
             </field>
             <field>
                 <name>Enable DNSSEC Support</name>
                 <type>checkbox</type>
                 <value></value>
-                <bindstofield>OPNsense->unboundplus->general->dnssec</bindstofield>
+                <bindstofield>YETIsense->unboundplus->general->dnssec</bindstofield>
             </field>
             <field>
                 <name>Harden DNSSEC data</name>
                 <type>checkbox</type>
                 <value></value>
-                <bindstofield>OPNsense->unboundplus->advanced->dnssecstripped</bindstofield>
+                <bindstofield>YETIsense->unboundplus->advanced->dnssecstripped</bindstofield>
             </field>
             <field>
                 <name>Next</name>
@@ -420,7 +420,7 @@ if (!empty($input_errors)) {
             </field>
         </fields>
         <stepbeforeformdisplay><![CDATA[
-foreach ((new \OPNsense\Routing\Gateways())->gatewayIterator() as $gw) {
+foreach ((new \YETIsense\Routing\Gateways())->gatewayIterator() as $gw) {
     if (empty($config['wizardtemp']['wangateway']) && $gw['name'] == 'WAN_GW') {
         $config['wizardtemp']['wangateway'] = $gw['gateway'];
     }
@@ -602,7 +602,7 @@ if (!empty($input_errors)) {
             </field>
         </fields>
         <stepafterformdisplay><![CDATA[
-$gateways = new \OPNsense\Routing\Gateways();
+$gateways = new \YETIsense\Routing\Gateways();
 $found = $defaultgw_found = false;
 
 foreach ($gateways->gatewayIterator() as $gw) {
@@ -629,7 +629,7 @@ if (!$found) {
 }
 
 /* Assignments to $config only after this went through! */
-$config = OPNsense\Core\Config::getInstance()->toArray(listtags());
+$config = YETIsense\Core\Config::getInstance()->toArray(listtags());
 
 $config['system']['hostname'] = $config['wizardtemp']['system']['hostname'];
 $config['system']['domain'] = $config['wizardtemp']['system']['domain'];

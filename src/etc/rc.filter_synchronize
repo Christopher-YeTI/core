@@ -77,7 +77,7 @@ function carp_check_version($url, $username, $password, $debug = false)
     $client = new SimpleXMLRPC_Client($url, 240);
     $client->debug = $debug;
     $client->setCredentials($username, $password);
-    if ($client->query('opnsense.firmware_version')) {
+    if ($client->query('yetisense.firmware_version')) {
         $remote_version = $client->getResponse();
     } else {
         // propagate error to log
@@ -88,7 +88,7 @@ function carp_check_version($url, $username, $password, $debug = false)
     }
 
     if (!is_array($remote_version) && trim($remote_version) == "Authentication failed") {
-        log_msg("An authentication failure occurred while trying to access {$url} (opnsense.firmware_version).", LOG_ERR);
+        log_msg("An authentication failure occurred while trying to access {$url} (yetisense.firmware_version).", LOG_ERR);
         return false;
     }
 
@@ -202,7 +202,7 @@ function carp_sync_xml($url, $username, $password, $sections, $debug)
     $client = new SimpleXMLRPC_Client($url,240);
     $client->debug = $debug;
     $client->setCredentials($username, $password);
-    if ($client->query('opnsense.restore_config_section', $transport_data)) {
+    if ($client->query('yetisense.restore_config_section', $transport_data)) {
         $response = $client->getResponse();
     } else {
         // propagate error to log
@@ -213,7 +213,7 @@ function carp_sync_xml($url, $username, $password, $sections, $debug)
     }
 
     if (!is_array($response) && trim($response) == "Authentication failed") {
-        log_msg("An authentication failure occurred while trying to access {$url} (opnsense.restore_config_section).", LOG_ERR);
+        log_msg("An authentication failure occurred while trying to access {$url} (yetisense.restore_config_section).", LOG_ERR);
         exit;
     }
 
@@ -297,7 +297,7 @@ if (!empty($config['hasync'])) {
     $client = new SimpleXMLRPC_Client($synchronizeto, 240);
     $client->debug = $enable_debug;
     $client->setCredentials($username, $hasync['password']);
-    if ($client->query("opnsense.filter_configure")) {
+    if ($client->query("yetisense.filter_configure")) {
         $response = $client->getResponse();
     } else {
         // propagate error to log
@@ -313,10 +313,10 @@ if (!empty($config['hasync'])) {
     }
 
     if ($restart_services) {
-        $client->query('opnsense.configd_reload_all_templates', []);
-        if ($client->query('opnsense.list_services', [])) {
+        $client->query('yetisense.configd_reload_all_templates', []);
+        if ($client->query('yetisense.list_services', [])) {
             foreach ($client->getResponse() as $service) {
-                $client->query('opnsense.restart_service', [
+                $client->query('yetisense.restart_service', [
                     "service" => $service['name'],
                     "id" => isset($service['id']) ? $service['name'] : ""
                 ]);

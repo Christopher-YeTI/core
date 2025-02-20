@@ -35,7 +35,7 @@ require_once("system.inc");
 require_once("plugins.inc.d/unbound.inc");
 
 $rrdcfg = &config_read_array('rrd');
-$unboundcfg = &config_read_array('OPNsense', 'unboundplus', 'general');
+$unboundcfg = &config_read_array('YETIsense', 'unboundplus', 'general');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig = [];
@@ -220,7 +220,7 @@ $(document).ready(function() {
           <section class="col-xs-12">
             <div class="tab-content content-box col-xs-12">
               <div class="table-responsive">
-                <table class="table table-striped opnsense_standard_table_form">
+                <table class="table table-striped yetisense_standard_table_form">
                   <tr>
                     <td colspan="2"><strong><?=gettext('Unbound DNS reporting');?></strong></td>
                   </tr>
@@ -245,7 +245,7 @@ $(document).ready(function() {
           <section class="col-xs-12">
             <div class="tab-content content-box col-xs-12">
               <div class="table-responsive">
-                <table class="table table-striped opnsense_standard_table_form">
+                <table class="table table-striped yetisense_standard_table_form">
                   <tr>
                     <td colspan="2"><strong><?=gettext('Reporting Database Options');?></strong></td>
                   </tr>
@@ -276,7 +276,7 @@ $(document).ready(function() {
             </div>
             <div class="tab-content content-box col-xs-12">
               <div class="table-responsive">
-                <table class="table table-striped opnsense_standard_table_form">
+                <table class="table table-striped yetisense_standard_table_form">
                   <tr>
                     <td style="width:22%"><i class="fa fa-info-circle text-muted"></i> <?=gettext("Collected Reports");?> </td>
                     <td>

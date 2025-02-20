@@ -1,4 +1,4 @@
-# Copyright (c) 2023-2024 Franco Fichtner <franco@opnsense.org>
+# Copyright (c) 2023-2024 Franco Fichtner <franco@yetisense.org>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -26,7 +26,7 @@
 CORE_ABI?=	25.1
 CORE_ADDITIONS?=#empty
 CORE_MESSAGE?=	What are you looking at?
-CORE_NAME?=	opnsense
+CORE_NAME?=	yetisense
 # adjust src/root/boot/lua/logo-hourglass.lua.in accordingly:
 CORE_NICKNAME?=	Ultimate Unicorn
 CORE_TYPE?=	community

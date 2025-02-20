@@ -2,7 +2,7 @@
 <?php
 
 /*
- * Copyright (C) 2017-2024 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2017-2024 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2006 Scott Ullrich <sullrich@gmail.com>
  * Copyright (C) 2003-2005 Manuel Kasper <mk@neon1.net>
  * All rights reserved.
@@ -66,7 +66,7 @@ if (!is_ipaddr($ip)) {
     return;
 }
 
-$gw = OPNsense\Interface\Autoconf::getRouter($device, 'inet');
+$gw = YETIsense\Interface\Autoconf::getRouter($device, 'inet');
 
 $cacheip_file = "/tmp/{$device}_oldip";
 $cacheip = trim(@file_get_contents($cacheip_file));

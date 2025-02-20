@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3
 """
-    Copyright (c) 2023 Ad Schellevis <ad@opnsense.org>
+    Copyright (c) 2023 Ad Schellevis <ad@yetisense.org>
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
 """
 import sys
 import os
-sys.path.insert(0, "/usr/local/opnsense/site-python")
+sys.path.insert(0, "/usr/local/yetisense/site-python")
 from duckdb_helper import export_database
 
 

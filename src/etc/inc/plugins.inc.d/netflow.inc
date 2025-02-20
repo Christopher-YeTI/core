@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2016-2018 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2016-2018 Franco Fichtner <franco@yetisense.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,14 +28,14 @@
 
 function netflow_enabled()
 {
-    $mdl = new \OPNsense\Diagnostics\Netflow();
+    $mdl = new \YETIsense\Diagnostics\Netflow();
 
     return !empty((string)$mdl->capture->targets) && !empty((string)$mdl->capture->interfaces);
 }
 
 function netflow_local_enabled()
 {
-    $mdl = new \OPNsense\Diagnostics\Netflow();
+    $mdl = new \YETIsense\Diagnostics\Netflow();
 
     return $mdl->collect->enable == '1';
 }
@@ -83,7 +83,7 @@ function netflow_xmlrpc_sync()
     $result = [];
     $result[] = array(
         'description' => gettext('Netflow / Insight'),
-        'section' => 'OPNsense.Netflow',
+        'section' => 'YETIsense.Netflow',
         'id' => 'syslog',
         'services' => ["samplicate", "flowd_aggregate"],
     );

@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2024 Franco Fichtner <franco@opnsense.org>
+# Copyright (c) 2014-2024 Franco Fichtner <franco@yetisense.org>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -110,12 +110,12 @@ CORE_PKGVERSION=	${CORE_VERSION}
 CORE_PYTHON_DOT=	${CORE_PYTHON:C/./&./1}
 
 CORE_COMMENT?=		${CORE_PRODUCT} ${CORE_TYPE} release
-CORE_MAINTAINER?=	project@opnsense.org
-CORE_ORIGIN?=		opnsense/${CORE_NAME}
-CORE_PACKAGESITE?=	https://pkg.opnsense.org
-CORE_PRODUCT?=		OPNsense
+CORE_MAINTAINER?=	project@yetisense.org
+CORE_ORIGIN?=		yetisense/${CORE_NAME}
+CORE_PACKAGESITE?=	https://pkg.yetisense.org
+CORE_PRODUCT?=		YETIsense
 CORE_REPOSITORY?=	${CORE_ABI}/latest
-CORE_WWW?=		https://opnsense.org/
+CORE_WWW?=		https://yetisense.org/
 
 CORE_COPYRIGHT_HOLDER?=	Deciso B.V.
 CORE_COPYRIGHT_WWW?=	https://www.deciso.com/
@@ -151,10 +151,10 @@ CORE_DEPENDS?=		ca_root_nss \
 			ntp \
 			openssh-portable \
 			openvpn \
-			opnsense-installer \
-			opnsense-lang \
-			opnsense-update \
-			pam_opnsense \
+			yetisense-installer \
+			yetisense-lang \
+			yetisense-update \
+			pam_yetisense \
 			pftop \
 			php${CORE_PHP}-ctype \
 			php${CORE_PHP}-curl \
@@ -207,7 +207,7 @@ WRKDIR?=${.CURDIR}/work
 MFCDIR?=${WRKDIR}/mfc
 PKGDIR?=${WRKDIR}/pkg
 WRKSRC?=${WRKDIR}/src
-TESTDIR?=${.CURDIR}/src/opnsense/mvc/tests
+TESTDIR?=${.CURDIR}/src/yetisense/mvc/tests
 
 debug:
 	@${VERSIONBIN} ${@} > /dev/null
@@ -215,8 +215,8 @@ debug:
 mount:
 	@if [ ! -f ${WRKDIR}/.mount_done ]; then \
 	    echo -n "Enabling core.git live mount..."; \
-	    sed ${SED_REPLACE} ${.CURDIR}/src/opnsense/version/core.in > \
-	        ${.CURDIR}/src/opnsense/version/core; \
+	    sed ${SED_REPLACE} ${.CURDIR}/src/yetisense/version/core.in > \
+	        ${.CURDIR}/src/yetisense/version/core; \
 	    mount_unionfs ${.CURDIR}/src ${LOCALBASE}; \
 	    touch ${WRKDIR}/.mount_done; \
 	    echo "done"; \
@@ -255,8 +255,8 @@ manifest:
 		fi; \
 	done
 	@echo "}"
-	@if [ -f ${WRKSRC}${LOCALBASE}/opnsense/version/core ]; then \
-	    echo "annotations $$(cat ${WRKSRC}${LOCALBASE}/opnsense/version/core)"; \
+	@if [ -f ${WRKSRC}${LOCALBASE}/yetisense/version/core ]; then \
+	    echo "annotations $$(cat ${WRKSRC}${LOCALBASE}/yetisense/version/core)"; \
 	fi
 
 .if ${.TARGETS:Mupgrade}
@@ -278,11 +278,11 @@ scripts:
 install:
 	@${CORE_MAKE} -C ${.CURDIR}/contrib install DESTDIR=${DESTDIR}
 	@${CORE_MAKE} -C ${.CURDIR}/src install DESTDIR=${DESTDIR} ${MAKE_REPLACE}
-.if exists(${LOCALBASE}/opnsense/www/index.php)
+.if exists(${LOCALBASE}/yetisense/www/index.php)
 	# try to update the current system if it looks like one
-	@touch ${LOCALBASE}/opnsense/www/index.php
+	@touch ${LOCALBASE}/yetisense/www/index.php
 .endif
-	@rm -f /tmp/opnsense_acl_cache.json /tmp/opnsense_menu_cache.xml
+	@rm -f /tmp/yetisense_acl_cache.json /tmp/yetisense_menu_cache.xml
 
 collect:
 	@(cd ${.CURDIR}/src; find * -type f) | while read FILE; do \
@@ -335,7 +335,7 @@ package: plist-check package-check clean-wrksrc
 	@${CORE_MAKE} DESTDIR=${WRKSRC} install
 	@echo " done"
 	@echo ">>> Generated version info for ${CORE_NAME}-${CORE_PKGVERSION}:"
-	@cat ${WRKSRC}${LOCALBASE}/opnsense/version/core
+	@cat ${WRKSRC}${LOCALBASE}/yetisense/version/core
 	@echo -n ">>> Generating metadata for ${CORE_NAME}-${CORE_PKGVERSION}..."
 	@${CORE_MAKE} DESTDIR=${WRKSRC} metadata
 	@echo " done"
@@ -345,7 +345,7 @@ package: plist-check package-check clean-wrksrc
 
 upgrade-check:
 	@if ! ${PKG} info ${CORE_NAME} > /dev/null; then \
-		echo ">>> Cannot find package.  Please run 'opnsense-update -t ${CORE_NAME}'" >&2; \
+		echo ">>> Cannot find package.  Please run 'yetisense-update -t ${CORE_NAME}'" >&2; \
 		exit 1; \
 	fi
 	@if [ "$$(${VERSIONBIN} -vH)" = "${CORE_PKGVERSION} ${CORE_HASH}" ]; then \
@@ -367,7 +367,7 @@ lint-xml:
 	    -name "*.xml*" -type f -print0 | xargs -0 -n1 xmllint --noout
 
 lint-model:
-	@for MODEL in $$(find ${.CURDIR}/src/opnsense/mvc/app/models -depth 3 \
+	@for MODEL in $$(find ${.CURDIR}/src/yetisense/mvc/app/models -depth 3 \
 	    -name "*.xml"); do \
 		(xmllint $${MODEL} --xpath '//*[@type and not(@type="ArrayField") and (not(Required) or Required="N") and Default]' 2> /dev/null | grep '^<' || true) | while read LINE; do \
 			echo "$${MODEL}: $${LINE} has a spurious default value set"; \
@@ -401,7 +401,7 @@ lint-model:
 lint-acl:
 	@${.CURDIR}/Scripts/dashboard-acl.sh
 
-SCRIPTDIRS!=	find ${.CURDIR}/src/opnsense/scripts -type d -depth 1
+SCRIPTDIRS!=	find ${.CURDIR}/src/yetisense/scripts -type d -depth 1
 
 lint-exec:
 .for DIR in ${.CURDIR}/src/etc/rc.d ${.CURDIR}/src/etc/rc.syshook.d ${SCRIPTDIRS}
@@ -431,7 +431,7 @@ sweep:
 	find ${.CURDIR} -type f -depth 1 -print0 | \
 	    xargs -0 -n1 ${.CURDIR}/Scripts/cleanfile
 
-STYLEDIRS?=	src/etc/inc src/opnsense
+STYLEDIRS?=	src/etc/inc src/yetisense
 
 style-python: debug
 	@pycodestyle-${CORE_PYTHON_DOT} --ignore=E501 ${.CURDIR}/src || true
@@ -455,7 +455,7 @@ style-fix: debug
 .endfor
 
 style-model:
-	@for MODEL in $$(find ${.CURDIR}/src/opnsense/mvc/app/models -depth 3 \
+	@for MODEL in $$(find ${.CURDIR}/src/yetisense/mvc/app/models -depth 3 \
 	    -name "*.xml"); do \
 		perl -i -pe 's/<default>(.*?)<\/default>/<Default>$$1<\/Default>/g' $${MODEL}; \
 		perl -i -pe 's/<multiple>(.*?)<\/multiple>/<Multiple>$$1<\/Multiple>/g' $${MODEL}; \
@@ -551,10 +551,10 @@ push:
 	@git checkout ${CORE_MAIN}
 
 migrate:
-	@src/opnsense/mvc/script/run_migrations.php
+	@src/yetisense/mvc/script/run_migrations.php
 
 validate:
-	@src/opnsense/mvc/script/run_validations.php
+	@src/yetisense/mvc/script/run_validations.php
 
 test: debug
 	@if [ "$$(${VERSIONBIN} -v)" != "${CORE_PKGVERSION}" ]; then \
@@ -562,8 +562,8 @@ test: debug
 		exit 1; \
 	fi
 	@cd ${TESTDIR} && phpunit || true; rm -rf ${TESTDIR}/.phpunit.result.cache \
-	    ${TESTDIR}/app/models/OPNsense/ACL/AclConfig/backup; \
-	    git checkout -f ${TESTDIR}/app/models/OPNsense/ACL/AclConfig/config.xml
+	    ${TESTDIR}/app/models/YETIsense/ACL/AclConfig/backup; \
+	    git checkout -f ${TESTDIR}/app/models/YETIsense/ACL/AclConfig/config.xml
 
 
 checkout:

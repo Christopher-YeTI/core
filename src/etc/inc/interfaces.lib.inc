@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (c) 2015-2024 Franco Fichtner <franco@opnsense.org>
+ * Copyright (c) 2015-2024 Franco Fichtner <franco@yetisense.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

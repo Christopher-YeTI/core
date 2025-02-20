@@ -2,7 +2,7 @@
 
 /*
  * Copyright (C) 2016-2020 Deciso B.V.
- * Copyright (C) 2016-2018 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2016-2018 Franco Fichtner <franco@yetisense.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -85,7 +85,7 @@ function pf_cron()
 
     $jobs[]['autocron'] = array(
         '/usr/local/bin/flock -n -E 0 -o /tmp/filter_update_tables.lock ' .
-        '/usr/local/opnsense/scripts/filter/update_tables.py',
+        '/usr/local/yetisense/scripts/filter/update_tables.py',
         '*'
     );
 
@@ -176,7 +176,7 @@ function pf_firewall($fw)
         }
     }
 
-    $mdlFilter = new OPNsense\Firewall\Filter();
+    $mdlFilter = new YETIsense\Firewall\Filter();
 
     foreach ($mdlFilter->rules->rule->sortedBy(['sequence']) as $key => $rule) {
         $content = $rule->serialize();
@@ -220,7 +220,7 @@ function pf_xmlrpc_sync()
     $result[] = array(
         'description' => gettext('Firewall Rules'),
         'help' => gettext('Synchronize the firewall rules to the other HA host.'),
-        'section' => 'filter,OPNsense.Firewall.Filter.rules',
+        'section' => 'filter,YETIsense.Firewall.Filter.rules',
         'id' => 'rules',
         'services' => ['pf'],
     );
@@ -233,25 +233,25 @@ function pf_xmlrpc_sync()
     );
     $result[] = array(
         'description' => gettext('Firewall Categories'),
-        'section' => 'OPNsense.Firewall.Category',
+        'section' => 'YETIsense.Firewall.Category',
         'id' => 'categories',
     );
     $result[] = array(
         'description' => gettext('Firewall Log Templates'),
-        'section' => 'OPNsense.Firewall.Lvtemplate',
+        'section' => 'YETIsense.Firewall.Lvtemplate',
         'id' => 'lvtemplate',
     );
     $result[] = array(
         'description' => gettext('Aliases'),
         'help' => gettext('Synchronize the aliases over to the other HA host.'),
-        'section' => 'aliases,OPNsense.Firewall.Alias',
+        'section' => 'aliases,YETIsense.Firewall.Alias',
         'id' => 'aliases',
         'services' => ['pf'],
     );
     $result[] = array(
         'description' => gettext('NAT'),
         'help' => gettext('Synchronize the NAT rules over to the other HA host.'),
-        'section' => 'nat,OPNsense.Firewall.Filter.snatrules,OPNsense.Firewall.Filter.npt,OPNsense.Firewall.Filter.onetoone',
+        'section' => 'nat,YETIsense.Firewall.Filter.snatrules,YETIsense.Firewall.Filter.npt,YETIsense.Firewall.Filter.onetoone',
         'id' => 'nat',
         'services' => ['pf'],
     );

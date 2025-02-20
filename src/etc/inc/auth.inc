@@ -326,7 +326,7 @@ function local_user_set(&$user, $force_password = false, $userattrs = null)
     }
 
     if ($user_uid == 0) {
-        $user_shell = !empty($user['shell']) ? $user['shell'] : '/usr/local/sbin/opnsense-shell';
+        $user_shell = !empty($user['shell']) ? $user['shell'] : '/usr/local/sbin/yetisense-shell';
         $user_group = 'wheel';
         $user_home = '/root';
     } else {
@@ -566,6 +566,6 @@ function get_authenticator($authcfg = null)
         }
     }
 
-    $authFactory = new OPNsense\Auth\AuthenticationFactory();
+    $authFactory = new YETIsense\Auth\AuthenticationFactory();
     return $authFactory->get($authName);
 }

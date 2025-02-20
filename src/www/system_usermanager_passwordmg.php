@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2017-2018 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2017-2018 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2014-2015 Deciso B.V.
  * Copyright (C) 2011 Ermal Luçi
  * All rights reserved.
@@ -77,8 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $otp_url = "otpauth://totp/";
             $otp_url .= $username."@".htmlspecialchars($config['system']['hostname'])."?secret=";
             $otp_url .= $new_seed;
-            $otp_url .= "&issuer=OPNsense";
-            $otp_url .= "&image=https://docs.opnsense.org/_static/favicon.png";
+            $otp_url .= "&issuer=YETIsense";
+            $otp_url .= "&image=https://docs.yetisense.org/_static/favicon.png";
             echo json_encode([
               "otp_seed" => $new_seed ,
               "otp_seed_url" => $otp_url,

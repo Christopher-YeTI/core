@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2014-2023 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2014-2023 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2010 Ermal Luçi
  * Copyright (C) 2005-2006 Colin Smith <ethethlay@gmail.com>
  * Copyright (C) 2004-2007 Scott Ullrich <sullrich@gmail.com>
@@ -674,7 +674,7 @@ function is_hostnamewithport($hostport)
 function is_ipaddroralias($ipaddr)
 {
     if (is_alias($ipaddr)) {
-        foreach ((new \OPNsense\Firewall\Alias())->aliasIterator() as $alias) {
+        foreach ((new \YETIsense\Firewall\Alias())->aliasIterator() as $alias) {
             if ($alias['name'] == $ipaddr && !preg_match("/port/i", $alias['type'])) {
                 return true;
             }
@@ -750,7 +750,7 @@ function is_macaddr($macaddr, $partial = false)
 /* returns true if $port is a valid TCP/UDP port */
 function is_port($port)
 {
-    return OPNsense\Firewall\Util::isPort($port, false);
+    return YETIsense\Firewall\Util::isPort($port, false);
 }
 
 /* returns true if $portrange is a valid TCP/UDP portrange ("<port>:<port>") */
@@ -764,7 +764,7 @@ function is_portrange($portrange)
 function is_portoralias($port)
 {
     if (is_alias($port)) {
-        foreach ((new \OPNsense\Firewall\Alias())->aliasIterator() as $alias) {
+        foreach ((new \YETIsense\Firewall\Alias())->aliasIterator() as $alias) {
             if ($alias['name'] == $port && preg_match("/port/i", $alias['type'])) {
                 return true;
             }
@@ -1007,7 +1007,7 @@ function shell_safe($format, $args = [])
 /* check if an alias exists */
 function is_alias($name)
 {
-    return \OPNsense\Firewall\Util::isAlias($name);
+    return \YETIsense\Firewall\Util::isAlias($name);
 }
 
 function subnet_size($subnet)
