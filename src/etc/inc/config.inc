@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2015-2022 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2015-2022 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2009 Erik Kristensen <erik@erikkristensen.com>
  * Copyright (C) 2004-2010 Scott Ullrich <sullrich@gmail.com>
  * Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>
@@ -45,7 +45,7 @@ final class product
 
     private function __construct()
     {
-        self::$data = json_decode(file_get_contents('/usr/local/opnsense/version/core'), true);
+        self::$data = json_decode(file_get_contents('/usr/local/yetisense/version/core'), true);
 
         /* boot detection */
         self::$data['product_booting'] = false;
@@ -100,7 +100,7 @@ require_once('plugins.inc');
  */
 function load_config_from_file($filename)
 {
-    return OPNsense\Core\Config::getInstance()->toArrayFromFile($filename, listtags());
+    return YETIsense\Core\Config::getInstance()->toArrayFromFile($filename, listtags());
 }
 
 /****f* config/parse_config
@@ -111,7 +111,7 @@ function load_config_from_file($filename)
  ******/
 function parse_config()
 {
-    $cnf = OPNsense\Core\Config::getInstance();
+    $cnf = YETIsense\Core\Config::getInstance();
 
     // return config data as array, use old "listags" construction to mark certain elements as array (even if they're not recurring)
     $config = $cnf->toArray(listtags());
@@ -141,7 +141,7 @@ function convert_config($verbose = false)
     }
 
     /* chain the new migration into this function call */
-    $cmd = '/usr/local/opnsense/mvc/script/run_migrations.php';
+    $cmd = '/usr/local/yetisense/mvc/script/run_migrations.php';
     if ($verbose) {
         passthru($cmd);
     } else {
@@ -157,7 +157,7 @@ function convert_config($verbose = false)
     }
 
     /* factory reset on release type and plugins if necessary */
-    $cmd = '/usr/local/opnsense/scripts/firmware/register.php sync';
+    $cmd = '/usr/local/yetisense/scripts/firmware/register.php sync';
     if ($verbose) {
         passthru($cmd);
     } else {
@@ -165,7 +165,7 @@ function convert_config($verbose = false)
     }
 
     /* reload the config as it was rewritten and saved in the script context */
-    OPNsense\Core\Config::getInstance()->forceReload();
+    YETIsense\Core\Config::getInstance()->forceReload();
     $config = parse_config();
 }
 
@@ -211,13 +211,13 @@ function write_config($desc = '', $backup = true)
         null;
     }
 
-    $cnf = OPNsense\Core\Config::getInstance();
+    $cnf = YETIsense\Core\Config::getInstance();
     $cnf->fromArray($config);
     $revision_info = make_config_revision_entry($desc);
 
     try {
         $cnf->save($revision_info, $backup);
-    } catch (OPNsense\Core\ConfigException $e) {
+    } catch (YETIsense\Core\ConfigException $e) {
         // write failure
         syslog(LOG_ERR, 'WARNING: Config contents could not be saved. Could not open file!');
         return -1;
@@ -237,7 +237,7 @@ function config_restore($conffile)
         return 1;
     }
 
-    $cnf = OPNsense\Core\Config::getInstance();
+    $cnf = YETIsense\Core\Config::getInstance();
     $cnf->backup();
     $cnf->restoreBackup($conffile);
 

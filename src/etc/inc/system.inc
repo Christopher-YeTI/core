@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2016-2024 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2016-2024 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2004-2007 Scott Ullrich <sullrich@gmail.com>
  * Copyright (C) 2003-2004 Manuel Kasper <mk@neon1.net>
  * All rights reserved.
@@ -281,7 +281,7 @@ function get_country_codes()
 {
     $dn_cc = array();
 
-    $iso3166_tab = '/usr/local/opnsense/contrib/tzdata/iso3166.tab';
+    $iso3166_tab = '/usr/local/yetisense/contrib/tzdata/iso3166.tab';
     if (file_exists($iso3166_tab)) {
         $dn_cc_file = file($iso3166_tab);
         foreach ($dn_cc_file as $line) {
@@ -353,7 +353,7 @@ function get_nameservers($interface = null, $with_gateway = false)
 {
     global $config;
 
-    $gateways = new \OPNsense\Routing\Gateways();
+    $gateways = new \YETIsense\Routing\Gateways();
     $syscfg = config_read_array('system');
     $exclude_interfaces = [];
     $master_list = [];
@@ -567,7 +567,7 @@ function system_interface_route($gw, $routes)
 
     if (!$far) {
         /* special case tries to turn on far gateway when required for dynamic gateway */
-        $dynamicgw = OPNsense\Interface\Autoconf::getRouter($device, 'inet');
+        $dynamicgw = YETIsense\Interface\Autoconf::getRouter($device, 'inet');
         if (!empty($dynamicgw) && $gateway === $dynamicgw) {
             list (, $network) = interfaces_primary_address($interface);
             if (!empty($network) && !ip_in_subnet($gateway, $network)) {
@@ -663,7 +663,7 @@ function system_routing_configure($verbose = false, $interface_map = null, $moni
     service_log(sprintf('Setting up routes%s...', empty($interface_map) ? '' : ' for ' . join(', ', $interface_map)), $verbose);
 
     $ifdetails = legacy_interfaces_details();
-    $gateways = new \OPNsense\Routing\Gateways();
+    $gateways = new \YETIsense\Routing\Gateways();
     $down_gateways = isset($config['system']['gw_switch_default']) && $monitor !== 'ignore' ? return_down_gateways() : [];
     $routes = json_decode(configd_run('interface routes list -n json'), true) ?? [];
 
@@ -808,8 +808,8 @@ function system_syslog_start($verbose = false)
 {
     service_log('Configuring system logging...', $verbose);
 
-    configd_run('template reload OPNsense/Syslog');
-    mwexecf('/usr/local/opnsense/scripts/syslog/generate_certs');
+    configd_run('template reload YETIsense/Syslog');
+    mwexecf('/usr/local/yetisense/scripts/syslog/generate_certs');
 
     $last_version = @file_get_contents('/var/run/syslog-ng.version');
     $this_version = shell_safe('syslog-ng -V | sha256');
@@ -865,7 +865,7 @@ function system_firmware_configure($verbose = false)
 {
     service_log('Writing firmware settings:', $verbose);
 
-    $scripts = glob('/usr/local/opnsense/scripts/firmware/repos/*');
+    $scripts = glob('/usr/local/yetisense/scripts/firmware/repos/*');
     natsort($scripts);
 
     foreach ($scripts as $script) {
@@ -892,7 +892,7 @@ function system_trust_configure($verbose = false)
 
     service_log('Writing trust files...', $verbose);
 
-    $trust = new \OPNsense\Trust\General();
+    $trust = new \YETIsense\Trust\General();
 
     /*
      * Write separate files because certctl will ignore the whole file
@@ -907,7 +907,7 @@ function system_trust_configure($verbose = false)
      * 5. Write bundle files with all /etc/ssl/certs content
      */
 
-    $ca_files = '/usr/local/share/certs/ca-root-opnsense-%s';
+    $ca_files = '/usr/local/share/certs/ca-root-yetisense-%s';
 
     foreach (glob(sprintf($ca_files, '*')) as $ca_unlink) {
         @unlink($ca_unlink);
@@ -925,7 +925,7 @@ function system_trust_configure($verbose = false)
                     $user_cas[] = "";
                 }
             }
-            $ca = "# OPNsense trust authority: {$entry['descr']}\n";
+            $ca = "# YETIsense trust authority: {$entry['descr']}\n";
             $ca_count = 0;
             $include_intermediates = !empty((string)$trust->store_intermediate_certs);
             foreach ($user_cas as $user_ca) {
@@ -966,7 +966,7 @@ function system_trust_configure($verbose = false)
 
             if ($ca_count) {
                 $ca_file = sprintf($ca_files, $i . '.crt');
-                \OPNsense\Core\File::file_put_contents(sprintf($ca_file, $i), $ca, 0644);
+                \YETIsense\Core\File::file_put_contents(sprintf($ca_file, $i), $ca, 0644);
             }
         }
     }
@@ -977,7 +977,7 @@ function system_trust_configure($verbose = false)
             if (!empty($entry) && !empty($entry['text'])) {
                 $crl_file = sprintf($ca_files, $i . '.crl');
                 $payload = base64_decode($entry['text']) ?? '';
-                \OPNsense\Core\File::file_put_contents(sprintf($crl_file, $i), $payload, 0644);
+                \YETIsense\Core\File::file_put_contents(sprintf($crl_file, $i), $payload, 0644);
             }
         }
     }
@@ -985,7 +985,7 @@ function system_trust_configure($verbose = false)
     service_log("done.\n", $verbose);
 
     /* collects all trusted certificates into /etc/ssl/certs directory */
-    passthru('/usr/local/opnsense/scripts/system/certctl.py rehash');
+    passthru('/usr/local/yetisense/scripts/system/certctl.py rehash');
 
     service_log('Writing trust bundles...', $verbose);
 
@@ -1004,7 +1004,7 @@ function system_trust_configure($verbose = false)
         chmod($pem, 0644);
     }
 
-    configd_run('template reload OPNsense/Trust');
+    configd_run('template reload YETIsense/Trust');
 
     service_log("done.\n", $verbose);
 }
@@ -1148,7 +1148,7 @@ function system_cron_configure($verbose = false)
         }
     }
 
-    $crontab_contents = "# DO NOT EDIT THIS FILE -- OPNsense auto-generated file\n";
+    $crontab_contents = "# DO NOT EDIT THIS FILE -- YETIsense auto-generated file\n";
     $crontab_contents .= "#\n";
     $crontab_contents .= "# User-defined crontab files can be loaded via /etc/cron.d\n";
     $crontab_contents .= "# or /usr/local/etc/cron.d and follow the same format as\n";
@@ -1169,7 +1169,7 @@ function system_cron_configure($verbose = false)
 
     file_put_contents('/var/cron/tabs/root', $crontab_contents);
 
-    configd_run('template reload OPNsense/Cron');
+    configd_run('template reload YETIsense/Cron');
 
     mwexec('/etc/rc.d/cron restart');
 
@@ -1335,7 +1335,7 @@ function system_login_configure($verbose = false)
 
     fclose($fd);
 
-    configd_run('template reload OPNsense/Auth');
+    configd_run('template reload YETIsense/Auth');
 
     service_log("done.\n", $verbose);
 
@@ -1346,7 +1346,7 @@ function system_login_configure($verbose = false)
 function reset_factory_defaults($sync = true)
 {
     mwexec('/bin/rm -fr /conf/* /var/log/* /root/.history');
-    mwexec('/usr/local/sbin/opnsense-beep stop');
+    mwexec('/usr/local/sbin/yetisense-beep stop');
 
     /* as we go through a special case directly shut down */
     $shutdown_cmd = '/sbin/shutdown -op now';

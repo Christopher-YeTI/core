@@ -1,7 +1,7 @@
-OPNsense GUI and system management
+YETIsense GUI and system management
 ==================================
 
-The OPNsense project invites developers to start contributing to
+The YETIsense project invites developers to start contributing to
 the code base.  For your own purposes or – even better – to join us in
 creating the best open source firewall available.
 
@@ -9,12 +9,12 @@ The build process has been designed to make it easy for anyone to
 build and write code.  The main outline of the new codebase is
 available at:
 
-https://docs.opnsense.org/development/architecture.html
+https://docs.yetisense.org/development/architecture.html
 
 Our aim is to gradually evolve to a new codebase instead of using a
 big bang approach into something new.
 
-<a href="https://scan.coverity.com/projects/opnsense-core">
+<a href="https://scan.coverity.com/projects/yetisense-core">
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/26974/badge.svg"/>
 </a>
@@ -22,12 +22,12 @@ big bang approach into something new.
 Build tools
 ===========
 
-To create working software like OPNsense you need the sources and the
-tools to build it.  The build tools for OPNsense are freely available.
+To create working software like YETIsense you need the sources and the
+tools to build it.  The build tools for YETIsense are freely available.
 
-Notes on how to build OPNsense can be found in the tools repository:
+Notes on how to build YETIsense can be found in the tools repository:
 
-https://github.com/opnsense/tools
+https://github.com/Christopher-YeTI/tools
 
 Contribute
 ==========
@@ -41,12 +41,12 @@ You can learn more about contributing on [CONTRIBUTING.md](./CONTRIBUTING.md).
 License
 =======
 
-OPNsense is and will always be available under the 2-Clause BSD license:
+YETIsense is and will always be available under the 2-Clause BSD license:
 
 https://opensource.org/licenses/BSD-2-Clause
 
 Every contribution made to the project must be licensed under the
-same conditions in order to keep OPNsense truly free and accessible
+same conditions in order to keep YETIsense truly free and accessible
 for everybody.
 
 Makefile targets
@@ -113,7 +113,7 @@ For php code you will need to have `phpcs` and `phpcbf` installed.
 You can use the package `php-codesniffer` on Debian/Ubuntu.
 Python code will require `pycodestyle`.
 
-For easier development you may want to use an OPNsense VM and install
+For easier development you may want to use an YETIsense VM and install
 the `os-debug` plugin that will offer the necessary tools.
 
 make sweep

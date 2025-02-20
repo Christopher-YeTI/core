@@ -1,0 +1,9 @@
+access_lists.conf:/usr/local/etc/unbound.yetisense.d/access_lists.conf
+advanced.conf:/var/unbound/advanced.conf
+blocklists.conf:/usr/local/etc/unbound/unbound-blocklists.conf
+safesearch.conf:/usr/local/etc/unbound.yetisense.d/safesearch.conf
+dot.conf:/usr/local/etc/unbound.yetisense.d/dot.conf
+private_domains.conf:/var/unbound/private_domains.conf
+domainoverrides.conf:/usr/local/etc/unbound.yetisense.d/domainoverrides.conf
+unbound_dhcpd.conf:/usr/local/etc/unbound_dhcpd.conf
+dnsbl_module.py:/var/unbound/dnsbl_module.py

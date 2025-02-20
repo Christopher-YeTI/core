@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-$aclObj = new \OPNsense\Core\ACL();
+$aclObj = new \YETIsense\Core\ACL();
 
 ?>
 

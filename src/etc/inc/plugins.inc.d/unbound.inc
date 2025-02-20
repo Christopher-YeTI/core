@@ -2,7 +2,7 @@
 
 /*
  * Copyright (C) 2018 Fabian Franz
- * Copyright (C) 2015-2024 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2015-2024 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2015 Manuel Faux <mfaux@conf.at>
  * Copyright (C) 2014 Warren Baker <warren@decoy.co.za>
  * Copyright (C) 2004-2007 Scott Ullrich <sullrich@gmail.com>
@@ -32,7 +32,7 @@
 
 function unbound_enabled()
 {
-    $mdl = new \OPNsense\Unbound\Unbound();
+    $mdl = new \YETIsense\Unbound\Unbound();
     return !empty((string)$mdl->general->enabled);
 }
 
@@ -57,7 +57,7 @@ function unbound_services()
         return $services;
     }
 
-    $mdl = new \OPNsense\Unbound\Unbound();
+    $mdl = new \YETIsense\Unbound\Unbound();
 
     $pconfig = [];
     $pconfig['name'] = 'unbound';
@@ -77,7 +77,7 @@ function unbound_xmlrpc_sync()
     $result = [];
 
     $result[] = [
-        'section' => 'unbound,OPNsense.unboundplus',
+        'section' => 'unbound,YETIsense.unboundplus',
         'description' => gettext('Unbound DNS'),
         'services' => ['unbound'],
         'id' => 'dnsresolver',
@@ -105,7 +105,7 @@ function unbound_optimization()
 
 function unbound_service_stop()
 {
-    $mdl = new \OPNsense\Unbound\Unbound();
+    $mdl = new \YETIsense\Unbound\Unbound();
 
     mwexec('/usr/local/bin/flock -E 0 -o /tmp/unbound_start.lock true');
 
@@ -129,7 +129,7 @@ function unbound_service_stop()
 function unbound_generate_config()
 {
     global $config;
-    $general = config_read_array('OPNsense', 'unboundplus', 'general');
+    $general = config_read_array('YETIsense', 'unboundplus', 'general');
 
     $pythonv = readlink('/usr/local/bin/python3');
     $python_dir = "/usr/local/lib/{$pythonv}";
@@ -170,7 +170,7 @@ function unbound_generate_config()
 
     $private_addr = "";
     if (!isset($config['system']['webgui']['nodnsrebindcheck'])) {
-        $advanced = config_read_array('OPNsense', 'unboundplus', 'advanced');
+        $advanced = config_read_array('YETIsense', 'unboundplus', 'advanced');
         if (!empty($advanced) && !empty($advanced['privateaddress'])) {
             foreach (explode(',', $advanced['privateaddress']) as $address) {
                 $private_addr .= "private-address: {$address}\n";
@@ -238,7 +238,7 @@ function unbound_generate_config()
         $include_dhcpleases = '';
     }
 
-    $unbound_mdl = new \OPNsense\Unbound\Unbound();
+    $unbound_mdl = new \YETIsense\Unbound\Unbound();
     $unbound_enabled = (string)$unbound_mdl->forwarding->enabled;
 
     $forward_conf = '';
@@ -346,11 +346,11 @@ EOD;
 
     /* Unbound load tripping over this file is very strange so make it a very safe rewrite */
     $root_hints_tmp = tempnam('/var/unbound', 'root.hints.');
-    copy('/usr/local/opnsense/data/unbound/root.min.hints', $root_hints_tmp);
+    copy('/usr/local/yetisense/data/unbound/root.min.hints', $root_hints_tmp);
     chmod($root_hints_tmp, 0644);
     rename($root_hints_tmp, '/var/unbound/root.hints');
 
-    configd_run('template reload OPNsense/Unbound/*');
+    configd_run('template reload YETIsense/Unbound/*');
 }
 
 function unbound_cache_flush()
@@ -360,7 +360,7 @@ function unbound_cache_flush()
 
 function unbound_match_interface($interface_map)
 {
-    $general = config_read_array('OPNsense', 'unboundplus', 'general');
+    $general = config_read_array('YETIsense', 'unboundplus', 'general');
 
     if (empty($interface_map)) {
         /* emulate non-interface reload */
@@ -399,7 +399,7 @@ function unbound_configure_do($verbose = false, $interface_map = null)
         return;
     }
 
-    $mdl = new \OPNsense\Unbound\Unbound();
+    $mdl = new \YETIsense\Unbound\Unbound();
 
     /* try to avoid restarting, but make sure to let it start if it is not running */
     if (!unbound_match_interface($interface_map) && isvalidpid('/var/run/unbound.pid')) {
@@ -430,7 +430,7 @@ function unbound_configure_do($verbose = false, $interface_map = null)
         @unlink('/var/unbound/data/stats');
     }
 
-    mwexecf_bg('/usr/local/bin/flock -n -E 0 -o /tmp/unbound_start.lock /usr/local/opnsense/scripts/unbound/start.sh %s', [$domain]);
+    mwexecf_bg('/usr/local/bin/flock -n -E 0 -o /tmp/unbound_start.lock /usr/local/yetisense/scripts/unbound/start.sh %s', [$domain]);
 
     waitforpid('/var/run/unbound.pid', 10);
 
@@ -441,7 +441,7 @@ function unbound_add_host_entries($ifconfig_details)
 {
     global $config;
 
-    $general = config_read_array('OPNsense', 'unboundplus', 'general');
+    $general = config_read_array('YETIsense', 'unboundplus', 'general');
 
     $ptr_records = ['127.0.0.1', '::1'];
 
@@ -531,7 +531,7 @@ function unbound_add_host_entries($ifconfig_details)
         unset($tmp_known_domains); // remove temporary variable
     }
 
-    $unbound_mdl = new \OPNsense\Unbound\Unbound();
+    $unbound_mdl = new \YETIsense\Unbound\Unbound();
     $hosts = iterator_to_array($unbound_mdl->hosts->host->iterateItems());
     $aliases = iterator_to_array($unbound_mdl->aliases->alias->iterateItems());
 

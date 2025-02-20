@@ -32,7 +32,7 @@
 
 require_once("auth.inc");
 
-$acl = new OPNsense\Core\ACL();
+$acl = new YETIsense\Core\ACL();
 $priv_list = $acl->getPrivList();
 
 function set_language()
@@ -59,7 +59,7 @@ function set_language()
     putenv('LC_ALL=' . $lang_encoding);
     setlocale(LC_ALL, $lang_encoding);
 
-    $textdomain = 'OPNsense';
+    $textdomain = 'YETIsense';
 
     textdomain($textdomain);
     bindtextdomain($textdomain, '/usr/local/share/locale');
@@ -167,7 +167,7 @@ function session_auth()
 
     /* Validate incoming login request */
     if (isset($_POST['login']) && !empty($_POST['usernamefld']) && !empty($_POST['passwordfld'])) {
-        $authFactory = new \OPNsense\Auth\AuthenticationFactory();
+        $authFactory = new \YETIsense\Auth\AuthenticationFactory();
         $is_authenticated = $authFactory->authenticate("WebGui", $_POST['usernamefld'], $_POST['passwordfld']);
 
         if ($is_authenticated) {
@@ -201,7 +201,7 @@ function session_auth()
             } else {
                 if ($_SERVER['REQUEST_URI'] == "/") {
                     // default landing page
-                    $acl = new OPNsense\Core\ACL();
+                    $acl = new YETIsense\Core\ACL();
                     $url = $acl->getLandingPage($_SESSION['Username']);
                     header(url_safe("Location: /{$url}"));
                 } else {

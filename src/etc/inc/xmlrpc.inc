@@ -30,7 +30,7 @@ require_once('IXR/IXR_Library.php');
 
 class XMLRPCServer
 {
-    private $prefix = 'opnsense';
+    private $prefix = 'yetisense';
 
     private $xmlrpc_callbacks = array();
 

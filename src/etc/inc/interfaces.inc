@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2015-2025 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2015-2025 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2004-2008 Scott Ullrich <sullrich@gmail.com>
  * Copyright (C) 2008-2009 Ermal Luçi
  * Copyright (C) 2005 Espen Johansen
@@ -539,7 +539,7 @@ function _interfaces_gif_configure($gif)
     /* XXX: remove routing part in 24.7 */
     $remote_gw = null;
     if (!empty($interface)) {
-        $remote_gw = (new \OPNsense\Routing\Gateways())->getInterfaceGateway($interface, $family);
+        $remote_gw = (new \YETIsense\Routing\Gateways())->getInterfaceGateway($interface, $family);
         if ($family == 'inet6' && is_linklocal($remote_gw) && strpos($remote_gw, '%') === false) {
             $remote_gw .= '%' . get_real_interface($interface, 'inet6');
         }
@@ -1103,8 +1103,8 @@ EOD;
         $mpdconf .= "  set iface enable tcpmssfix\n";
     }
 
-    $mpdconf .= "  set iface up-script /usr/local/opnsense/scripts/interfaces/ppp-linkup.sh\n";
-    $mpdconf .= "  set iface down-script /usr/local/opnsense/scripts/interfaces/ppp-linkdown.sh\n";
+    $mpdconf .= "  set iface up-script /usr/local/yetisense/scripts/interfaces/ppp-linkup.sh\n";
+    $mpdconf .= "  set iface down-script /usr/local/yetisense/scripts/interfaces/ppp-linkdown.sh\n";
 
     if ($ipv4_mode == 'enable') {
         if ($ppp['type'] == 'ppp') {
@@ -1242,7 +1242,7 @@ EOD;
     killbypid("/var/run/{$ppp['type']}_{$interface}.pid");
 
     /* mpd5 modem chat script expected in the same directory as the mpd_xxx.conf files */
-    @copy('/usr/local/opnsense/scripts/interfaces/mpd.script', '/var/etc/mpd.script');
+    @copy('/usr/local/yetisense/scripts/interfaces/mpd.script', '/var/etc/mpd.script');
 
     /* write the configuration */
     @file_put_contents("/var/etc/mpd_{$interface}.conf", $mpdconf);
@@ -1269,7 +1269,7 @@ EOD;
     );
 
     /* appease netgraph by setting the correct node name */
-    shell_safe('/usr/sbin/daemon -f /usr/local/opnsense/scripts/interfaces/ppp-rename.sh %s %s %s', [$interface, $ifcfg['if'], $ppp['type']]);
+    shell_safe('/usr/sbin/daemon -f /usr/local/yetisense/scripts/interfaces/ppp-rename.sh %s %s %s', [$interface, $ifcfg['if'], $ppp['type']]);
 
     /* wait for functional device */
     $max = 20;
@@ -2660,7 +2660,7 @@ function interface_6rd_configure($interface, $wancfg, $update = false)
     mwexecf('/sbin/ifconfig %s stfv4net %s/%s', array($stfiface, $ip4address, $wancfg['prefix-6rd-v4plen']));
     mwexecf('/usr/local/sbin/ifctl -i %s -6rd -a %s', [$stfiface, $rd6brgw]);
 
-    $gateways = new \OPNsense\Routing\Gateways();
+    $gateways = new \YETIsense\Routing\Gateways();
     $ip4gateway = $gateways->getInterfaceGateway($interface, 'inet');
     system_host_route($wancfg['gateway-6rd'], $ip4gateway);
 
@@ -2746,7 +2746,7 @@ function interface_6to4_configure($interface, $wancfg, $update = false)
     mwexecf('/sbin/ifconfig %s inet6 %s prefixlen 16', array($stfiface, $stflan));
     mwexecf('/usr/local/sbin/ifctl -i %s -6rd -a %s', [$stfiface, $stfbrgw]);
 
-    $gateways = new \OPNsense\Routing\Gateways();
+    $gateways = new \YETIsense\Routing\Gateways();
     $ip4gateway = $gateways->getInterfaceGateway($interface, 'inet');
     system_host_route('192.88.99.1', $ip4gateway);
 
@@ -2777,7 +2777,7 @@ function interface_dhcpv6_configure($interface, $wancfg)
     $rtsoldcommand = exec_safe('/usr/sbin/rtsold -aiu -p %s -A %s -R %s', [
         '/var/run/rtsold.pid',
         '/var/etc/rtsold_script.sh',
-        '/usr/local/opnsense/scripts/interfaces/rtsold_resolvconf.sh',
+        '/usr/local/yetisense/scripts/interfaces/rtsold_resolvconf.sh',
     ]);
 
     if (!empty($syscfg['dhcp6_debug'])) {
@@ -3245,7 +3245,7 @@ interface "{$wanif}" {
   select-timeout 0;
   initial-interval 1;
   {$dhclientconf_hostname}
-  script "/usr/local/opnsense/scripts/interfaces/dhclient-script";
+  script "/usr/local/yetisense/scripts/interfaces/dhclient-script";
 
 EOD;
 
@@ -3360,7 +3360,7 @@ function DHCP_Config_File_Advanced($interface, $wancfg, $wanif)
     $dhclientconf .= "{$request_options}";
     $dhclientconf .= "{$required_options}";
     $dhclientconf .= "{$option_modifiers}";
-    $dhclientconf .= "\n\tscript \"/usr/local/opnsense/scripts/interfaces/dhclient-script\";\n";
+    $dhclientconf .= "\n\tscript \"/usr/local/yetisense/scripts/interfaces/dhclient-script\";\n";
     if (empty($wancfg['dhcphonourmtu'])) {
         $dhclientconf .= "\tsupersede interface-mtu 0;\n";
     }
@@ -3960,7 +3960,7 @@ function interfaces_neighbors_configure($device = null, $ifconfig_details = null
     }
 
     $current_neightbors = [];
-    foreach ((new \OPNsense\Interfaces\Neighbor())->neighbor->iterateItems() as $key => $node) {
+    foreach ((new \YETIsense\Interfaces\Neighbor())->neighbor->iterateItems() as $key => $node) {
         $found = empty($if);    /* unfiltered when no $if provided */
         foreach ($subnets as $subnet) {
             $found = ip_in_subnet((string)$node->ipaddress, $subnet);
@@ -3980,7 +3980,7 @@ function interfaces_neighbors_configure($device = null, $ifconfig_details = null
     }
 
     /* persist accounted addresses, without a cleanup that would be all seen since last cleanup */
-    $fobj = new \OPNsense\Core\FileObject('/tmp/interfaces_neighbors.json', 'a+');
+    $fobj = new \YETIsense\Core\FileObject('/tmp/interfaces_neighbors.json', 'a+');
     $current = $fobj->readJson() ?? [];
     $fobj->truncate(0)->writeJson(
         !empty($device) ? array_unique(array_merge($current_neightbors, $current)) : $current_neightbors

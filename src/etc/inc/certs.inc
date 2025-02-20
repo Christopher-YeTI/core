@@ -295,7 +295,7 @@ function cert_get_serial($str_crt, $decode = true)
 
 function cert_in_use($certref)
 {
-    foreach (OPNsense\Core\Config::getInstance()->object()->xpath("//*[text() = '{$certref}']") as $node) {
+    foreach (YETIsense\Core\Config::getInstance()->object()->xpath("//*[text() = '{$certref}']") as $node) {
         $referring_node = $node->xpath("..")[0];
         if ($referring_node->getName() != 'cert') {
             return true;

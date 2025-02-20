@@ -109,9 +109,9 @@ function merge_config_attributes(&$cnf_source, &$cnf_dest)
 function firmware_version_xmlrpc()
 {
     return [
-        'base' => ['version' => shell_safe('opnsense-version -v base')],
-        'firmware' => ['version' => shell_safe('opnsense-version -v core')],
-        'kernel' => ['version' => shell_safe('opnsense-version -v kernel')],
+        'base' => ['version' => shell_safe('yetisense-version -v base')],
+        'firmware' => ['version' => shell_safe('yetisense-version -v core')],
+        'kernel' => ['version' => shell_safe('yetisense-version -v kernel')],
     ];
 }
 
@@ -142,7 +142,7 @@ function restore_config_section_xmlrpc($new_config)
 {
     global $config;
     // lock config write during merge
-    OPNsense\Core\Config::getInstance()->lock();
+    YETIsense\Core\Config::getInstance()->lock();
 
     require_once("interfaces.inc");
     require_once("filter.inc");

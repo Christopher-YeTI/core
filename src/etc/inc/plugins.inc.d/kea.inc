@@ -30,7 +30,7 @@ function kea_services()
 {
 
     $services = [];
-    if (!empty((string)(new \OPNsense\Kea\KeaDhcpv4())->general->enabled)) {
+    if (!empty((string)(new \YETIsense\Kea\KeaDhcpv4())->general->enabled)) {
         $services[] = [
             'description' => gettext('KEA DHCPv4 server'),
             'pidfile' => '/var/run/kea/kea-dhcp4.kea-dhcp4.pid',
@@ -55,7 +55,7 @@ function kea_run()
 function kea_staticmap($proto = null, $valid_addresses = true, $ifconfig_details = null)
 {
     $staticmap = [];
-    $keav4 = new \OPNsense\Kea\KeaDhcpv4();
+    $keav4 = new \YETIsense\Kea\KeaDhcpv4();
 
     if ($proto == 6 || empty((string)$keav4->general->enabled)) {
         /* unsupported protocol or not enabled */
@@ -112,11 +112,11 @@ function kea_configure()
 
 function kea_configure_do($verbose = false)
 {
-    $keaDhcpv4 = new \OPNsense\Kea\KeaDhcpv4();
+    $keaDhcpv4 = new \YETIsense\Kea\KeaDhcpv4();
     if ($keaDhcpv4->isEnabled()) {
         service_log('Sync KEA DHCP config...', $verbose);
         $keaDhcpv4->generateConfig();
-        (new \OPNsense\Kea\KeaCtrlAgent())->generateConfig();
+        (new \YETIsense\Kea\KeaCtrlAgent())->generateConfig();
         service_log("done.\n", $verbose);
     }
 }
@@ -132,7 +132,7 @@ function kea_syslog()
 function kea_firewall($fw)
 {
     global $config;
-    $keav4 = new \OPNsense\Kea\KeaDhcpv4();
+    $keav4 = new \YETIsense\Kea\KeaDhcpv4();
     if ($keav4->fwrulesEnabled()) {
         // automatic (IPv4) rules enabled
         foreach (explode(',', $keav4->general->interfaces) as $intf) {
@@ -174,7 +174,7 @@ function kea_xmlrpc_sync()
 
     $result[] = [
         'description' => gettext('Kea DHCP'),
-        'section' => 'OPNsense.Kea',
+        'section' => 'YETIsense.Kea',
         'id' => 'kea',
         'services' => ["kea-dhcpv4"],
     ];

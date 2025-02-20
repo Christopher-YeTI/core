@@ -173,15 +173,15 @@ basicConstraints=CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 
 # This will be displayed in Netscape's comment listbox.
-nsComment			= "OPNsense Generated Client Certificate"
+nsComment			= "YETIsense Generated Client Certificate"
 
 # PKIX recommendations harmless if included in all certificates.
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid,issuer:always
 extendedKeyUsage=clientAuth
 
-###OPNsense:subjectAltName###
-###OPNsense:authorityInfoAccess###
+###YETIsense:subjectAltName###
+###YETIsense:authorityInfoAccess###
 
 [ v3_req ]
 
@@ -190,8 +190,8 @@ extendedKeyUsage=clientAuth
 basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 
-###OPNsense:subjectAltName###
-###OPNsense:authorityInfoAccess###
+###YETIsense:subjectAltName###
+###YETIsense:authorityInfoAccess###
 
 [ v3_ca ]
 
@@ -199,7 +199,7 @@ keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 # Extensions for a typical CA
 
 # This will be displayed in Netscape's comment listbox.
-nsComment			= "OPNsense Generated Certificate Authority"
+nsComment			= "YETIsense Generated Certificate Authority"
 
 # PKIX recommendation.
 
@@ -215,8 +215,8 @@ basicConstraints = critical, CA:true
 # When present, conforming CAs SHOULD mark this extension as critical.
 keyUsage = critical, cRLSign, digitalSignature, keyCertSign
 
-###OPNsense:subjectAltName###
-###OPNsense:authorityInfoAccess###
+###YETIsense:subjectAltName###
+###YETIsense:authorityInfoAccess###
 
 [ ocsp ]
 # Extension for OCSP signing certificates (`man ocsp`).
@@ -236,7 +236,7 @@ extendedKeyUsage = critical, OCSPSigning
 authorityKeyIdentifier=keyid:always
 
 # This will be displayed in Netscape's comment listbox.
-nsComment			= "OPNsense Generated Certificate Revocation List"
+nsComment			= "YETIsense Generated Certificate Revocation List"
 
 [ proxy_cert_ext ]
 # These extensions should be added when creating a proxy certificate
@@ -247,7 +247,7 @@ nsComment			= "OPNsense Generated Certificate Revocation List"
 basicConstraints=CA:FALSE
 
 # This will be displayed in Netscape's comment listbox.
-nsComment			= "OPNsense Generated Proxy Certificate"
+nsComment			= "YETIsense Generated Proxy Certificate"
 
 # PKIX recommendations harmless if included in all certificates.
 subjectKeyIdentifier=hash
@@ -291,35 +291,35 @@ ess_cert_id_chain	= no	# Must the ESS cert id chain be included?
 # Make a cert with nsCertType=server
 basicConstraints=CA:FALSE
 nsCertType			= server
-nsComment			= "OPNsense Generated Server Certificate"
+nsComment			= "YETIsense Generated Server Certificate"
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid,issuer:always
 extendedKeyUsage=serverAuth,1.3.6.1.5.5.8.2.2
 keyUsage = digitalSignature, keyEncipherment
 
-###OPNsense:subjectAltName###
-###OPNsense:authorityInfoAccess###
+###YETIsense:subjectAltName###
+###YETIsense:authorityInfoAccess###
 
 [ combined_server_client ]
 
 basicConstraints=CA:FALSE
-nsComment			   = "OPNsense Generated Combined Client/Server Certificate"
+nsComment			   = "YETIsense Generated Combined Client/Server Certificate"
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid,issuer:always
 extendedKeyUsage       = clientAuth,serverAuth,1.3.6.1.5.5.8.2.2
 # This is typical in keyUsage for a client certificate.
 keyUsage               = nonRepudiation, digitalSignature, keyEncipherment
 
-###OPNsense:subjectAltName###
-###OPNsense:authorityInfoAccess###
+###YETIsense:subjectAltName###
+###YETIsense:authorityInfoAccess###
 
 [ sign_csr ]
 
-nsComment              = "OPNsense Generated Certificate Signing Request"
+nsComment              = "YETIsense Generated Certificate Signing Request"
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid,issuer:always
 
-###OPNsense:subjectAltName###
-###OPNsense:keyUsage###
-###OPNsense:extendedKeyUsage###
-###OPNsense:basicConstraints###
+###YETIsense:subjectAltName###
+###YETIsense:keyUsage###
+###YETIsense:extendedKeyUsage###
+###YETIsense:basicConstraints###

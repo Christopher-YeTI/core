@@ -32,14 +32,14 @@ function core_services()
 
     $services = array();
 
-    if (isset($config['OPNsense']['captiveportal']['zones']['zone'])) {
+    if (isset($config['YETIsense']['captiveportal']['zones']['zone'])) {
         $enabled = false;
-        if (!empty($config['OPNsense']['captiveportal']['zones']['zone']['enabled'])) {
+        if (!empty($config['YETIsense']['captiveportal']['zones']['zone']['enabled'])) {
             // single zone and enabled
             $enabled = true;
         } else {
             // possible more zones, traverse items
-            foreach ($config['OPNsense']['captiveportal']['zones']['zone'] as $zone) {
+            foreach ($config['YETIsense']['captiveportal']['zones']['zone'] as $zone) {
                 if (!empty($zone['enabled'])) {
                     $enabled = true;
                 }
@@ -299,7 +299,7 @@ function core_cron()
      */
     if (isset($config['rrd']['enable'])) {
         $jobs[]['autocron'] = [
-            '/usr/local/bin/flock -n -E 0 -o /tmp/updaterrd.lock /usr/local/opnsense/scripts/health/updaterrd.php',
+            '/usr/local/bin/flock -n -E 0 -o /tmp/updaterrd.lock /usr/local/yetisense/scripts/health/updaterrd.php',
             '*'
         ];
     }
@@ -336,14 +336,14 @@ function core_cron()
         );
     }
 
-    foreach ((new OPNsense\Backup\BackupFactory())->listProviders() as $classname => $provider) {
+    foreach ((new YETIsense\Backup\BackupFactory())->listProviders() as $classname => $provider) {
         if ($provider['handle']->isEnabled()) {
             $jobs[]['autocron'] = array('/usr/local/sbin/configctl -d system remote backup 3600', 0, 1);
             break;
         }
     }
 
-    if (!empty((string)(new OPNsense\Trust\General())->fetch_crls)) {
+    if (!empty((string)(new YETIsense\Trust\General())->fetch_crls)) {
         $jobs[]['autocron'] = array('/usr/local/sbin/configctl -d system trust download_crls', '1');
     }
 
@@ -419,7 +419,7 @@ function core_xmlrpc_sync()
     $result[] = array(
         'description' => gettext('Static Routes'),
         'help' => gettext('Synchronize the Static Route configuration and Gateways to the other HA host.'),
-        'section' => 'staticroutes,gateways,OPNsense.Gateways',
+        'section' => 'staticroutes,gateways,YETIsense.Gateways',
         'id' => 'staticroutes',
         'services' => ["routing", "dpinger"],
     );
@@ -431,13 +431,13 @@ function core_xmlrpc_sync()
     );
     $result[] = array(
         'description' => gettext('Syslog'),
-        'section' => 'syslog,OPNsense.Syslog',
+        'section' => 'syslog,YETIsense.Syslog',
         'id' => 'syslog',
         'services' => ["syslogd"],
     );
     $result[] = array(
         'description' => gettext('Cron'),
-        'section' => 'OPNsense.cron',
+        'section' => 'YETIsense.cron',
         'id' => 'cron',
         'services' => ["cron"],
     );
@@ -521,7 +521,7 @@ function core_user_changed_groups($unused, $username)
  */
 function core_trust_crl()
 {
-    $trust = new \OPNsense\Trust\General();
+    $trust = new \YETIsense\Trust\General();
     if (!empty((string)$trust->install_crls)) {
         system_trust_configure();
     }

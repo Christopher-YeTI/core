@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CORE=$(opnsense-version -n)
+CORE=$(yetisense-version -n)
 PKG="/usr/local/sbin/pkg-static"
 
 if [ -z "${CORE}" ]; then

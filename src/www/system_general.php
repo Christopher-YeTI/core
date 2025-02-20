@@ -33,7 +33,7 @@ require_once("system.inc");
 require_once("interfaces.inc");
 
 $all_intf_details = legacy_interfaces_details();
-$a_gateways = (new \OPNsense\Routing\Gateways())->gatewaysIndexedByName();
+$a_gateways = (new \YETIsense\Routing\Gateways())->gatewaysIndexedByName();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (!empty($_GET['getpic'])) {
@@ -319,7 +319,7 @@ $( document ).ready(function() {
     <section class="col-xs-12">
       <form method="post" enctype="multipart/form-data">
         <div class="content-box tab-content __mb">
-          <table class="table table-striped opnsense_standard_table_form">
+          <table class="table table-striped yetisense_standard_table_form">
             <tr>
               <td style="width:22%"><strong><?= gettext('System') ?></strong></td>
               <td style="width:78%; text-align:right">
@@ -386,7 +386,7 @@ $( document ).ready(function() {
               <td>
                 <select name="theme" class="selectpicker">
 <?php
-                foreach (glob('/usr/local/opnsense/www/themes/*', GLOB_ONLYDIR) as $file):
+                foreach (glob('/usr/local/yetisense/www/themes/*', GLOB_ONLYDIR) as $file):
                   $file = basename($file);?>
                   <option <?= $file == $pconfig['theme'] ? 'selected="selected"' : '' ?>>
                     <?=$file;?>
@@ -424,7 +424,7 @@ $( document ).ready(function() {
         </div>
 
         <div class="content-box tab-content __mb">
-          <table class="table table-striped opnsense_standard_table_form">
+          <table class="table table-striped yetisense_standard_table_form">
             <tr>
               <td style="width:22%"><strong><?= gettext('Networking') ?></strong></td>
               <td style="width:78%"></td>
@@ -550,7 +550,7 @@ $( document ).ready(function() {
           </table>
         </div>
         <div class="content-box tab-content">
-          <table class="table table-striped opnsense_standard_table_form">
+          <table class="table table-striped yetisense_standard_table_form">
             <tr>
               <td style="width:22%"></td>
               <td>

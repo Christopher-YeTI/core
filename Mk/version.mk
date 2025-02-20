@@ -1,4 +1,4 @@
-# Copyright (c) 2023-2024 Franco Fichtner <franco@opnsense.org>
+# Copyright (c) 2023-2024 Franco Fichtner <franco@yetisense.org>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -26,7 +26,7 @@
 CORE_ABI?=	25.1
 CORE_ADDITIONS?=#empty
 CORE_MESSAGE?=	Carry on my wayward son
-CORE_NAME?=	opnsense-devel
+CORE_NAME?=	yetisense-devel
 # adjust src/root/boot/lua/logo-hourglass.lua.in accordingly:
 CORE_NICKNAME?=	Not Yet
 CORE_TYPE?=	development

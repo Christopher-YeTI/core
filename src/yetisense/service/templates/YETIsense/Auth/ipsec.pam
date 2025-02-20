@@ -1,0 +1,5 @@
+# auth
+auth		sufficient	pam_yetisense.so
+
+# account
+account		sufficient	pam_yetisense.so

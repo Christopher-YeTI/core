@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2024 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2024 Franco Fichtner <franco@yetisense.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,7 +52,7 @@ function dhcrelay_syslog()
 
 function dhcrelay_services()
 {
-    $mdl = new \OPNsense\DHCRelay\DHCRelay();
+    $mdl = new \YETIsense\DHCRelay\DHCRelay();
     $services = [];
 
     foreach ($mdl->relays->iterateItems() as $relay) {
@@ -80,7 +80,7 @@ function dhcrelay_xmlrpc_sync()
 
     $result[] = [
         'description' => gettext('DHCRelay'),
-        'section' => 'dhcrelay,dhcrelay6,OPNsense.DHCRelay',
+        'section' => 'dhcrelay,dhcrelay6,YETIsense.DHCRelay',
         'services' => ['dhcrelay'],
         'id' => 'dhcrelay',
     ];
@@ -94,7 +94,7 @@ function dhcrelay_configure_id($verbose = false, $id_map = null)
         return;
     }
 
-    $mdl = new \OPNsense\DHCRelay\DHCRelay();
+    $mdl = new \YETIsense\DHCRelay\DHCRelay();
     $relays = [];
 
     foreach ($mdl->relays->iterateItems() as $relay) {
@@ -179,7 +179,7 @@ function dhcrelay_configure_id($verbose = false, $id_map = null)
 
 function dhcrelay_bound_instances($family = null)
 {
-    $mdl = new \OPNsense\DHCRelay\DHCRelay();
+    $mdl = new \YETIsense\DHCRelay\DHCRelay();
     $instances = [];
 
     foreach ($mdl->relays->iterateItems() as $relay) {

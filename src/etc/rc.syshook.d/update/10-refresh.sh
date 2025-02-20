@@ -4,4 +4,4 @@
 /usr/local/etc/rc.configure_firmware
 
 # background the cleanup job to avoid blocking
-daemon -f opnsense-update -Fs
+daemon -f yetisense-update -Fs

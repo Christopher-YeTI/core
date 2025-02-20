@@ -288,7 +288,7 @@ include("head.inc");
     <section class="col-xs-12">
       <form method="post" name="iform" id="iform">
         <div class="content-box tab-content table-responsive __mb">
-          <table class="table table-striped opnsense_standard_table_form">
+          <table class="table table-striped yetisense_standard_table_form">
               <tr>
                 <td style="width:22%"><strong><?= gettext('Network Interfaces') ?></strong></td>
                 <td style="width:78%; text-align:right">
@@ -368,7 +368,7 @@ include("head.inc");
             </table>
           </div>
           <div class="content-box tab-content table-responsive __mb">
-            <table class="table table-striped opnsense_standard_table_form">
+            <table class="table table-striped yetisense_standard_table_form">
               <tr>
                 <td style="width:22%"><strong><?= gettext('IPv6 DHCP') ?></strong></td>
                 <td style="width:78%"></td>

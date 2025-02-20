@@ -62,7 +62,7 @@ $product = product::getInstance();
 <?php
     endif; ?>
     <!-- dialog "wait for (service) action" -->
-    <div class="modal fade" id="OPNsenseStdWaitDialog" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="YETIsenseStdWaitDialog" tabindex="-1" data-backdrop="static" data-keyboard="false">
       <div class="modal-backdrop fade in"></div>
       <div class="modal-dialog">
         <div class="modal-content">
@@ -90,7 +90,7 @@ $product = product::getInstance();
           if ($(this).data('service_id') != '') {
               url += '/' + $(this).data('service_id');
           }
-          $("#OPNsenseStdWaitDialog").modal('show');
+          $("#YETIsenseStdWaitDialog").modal('show');
           $.post(url, {}, function (data) {
             // refresh page after service action via server
             location.reload(true);

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<opnsense>
+<yetisense>
   <trigger_initial_wizard/>
-  <theme>opnsense</theme>
+  <theme>yetisense</theme>
   <sysctl>
     <item>
       <descr><![CDATA[Increase UFS read-ahead speeds to match the state of hard drives and NCQ.]]></descr>
@@ -194,7 +194,7 @@
   </sysctl>
   <system>
     <optimization>normal</optimization>
-    <hostname>OPNsense</hostname>
+    <hostname>YETIsense</hostname>
     <domain>localdomain</domain>
     <dnsallowoverride>1</dnsallowoverride>
     <group>
@@ -216,7 +216,7 @@
     <nextuid>2000</nextuid>
     <nextgid>2000</nextgid>
     <timezone>Etc/UTC</timezone>
-    <timeservers>0.opnsense.pool.ntp.org 1.opnsense.pool.ntp.org 2.opnsense.pool.ntp.org 3.opnsense.pool.ntp.org</timeservers>
+    <timeservers>0.yetisense.pool.ntp.org 1.yetisense.pool.ntp.org 2.yetisense.pool.ntp.org 3.yetisense.pool.ntp.org</timeservers>
     <webgui>
       <protocol>https</protocol>
     </webgui>
@@ -323,6 +323,6 @@
     <enable/>
   </rrd>
   <ntpd>
-    <prefer>0.opnsense.pool.ntp.org</prefer>
+    <prefer>0.yetisense.pool.ntp.org</prefer>
   </ntpd>
-</opnsense>
+</yetisense>

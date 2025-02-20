@@ -3,7 +3,7 @@
 /*
  * Copyright (C) 2020 Deciso B.V.
  * Copyright (C) 2018 Martin Wasley <martin@team-rebellion.net>
- * Copyright (C) 2016-2023 Franco Fichtner <franco@opnsense.org>
+ * Copyright (C) 2016-2023 Franco Fichtner <franco@yetisense.org>
  * Copyright (C) 2008 Bill Marquette <bill.marquette@gmail.com>
  * Copyright (C) 2008 Seth Mos <seth.mos@dds.nl>
  * Copyright (C) 2010 Ermal Luçi
@@ -108,7 +108,7 @@ function dpinger_instances($extended = false)
 {
     $instances = [];
 
-    foreach ((new \OPNsense\Routing\Gateways())->gatewaysIndexedByName() as $name => $gateway) {
+    foreach ((new \YETIsense\Routing\Gateways())->gatewaysIndexedByName() as $name => $gateway) {
         if (!empty($gateway['monitor_disable']) && !$extended) {
             /* do not monitor if such was requested */
             continue;
@@ -276,7 +276,7 @@ function dpinger_configure_do($verbose = false, $gwname_map = null)
         } else {
             /* use a separate script to produce the monitor alerts which runs forever */
             mwexecf(
-                '/usr/sbin/daemon -f -p %s /usr/local/opnsense/scripts/routes/gateway_watcher.php %s',
+                '/usr/sbin/daemon -f -p %s /usr/local/yetisense/scripts/routes/gateway_watcher.php %s',
                 ['/var/run/gateway_watcher.pid', 'interface routes alarm']
             );
         }

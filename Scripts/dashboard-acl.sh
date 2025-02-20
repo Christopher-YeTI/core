@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) 2024 Franco Fichtner <franco@opnsense.org>
+# Copyright (c) 2024 Franco Fichtner <franco@yetisense.org>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -25,8 +25,8 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-ACLDIR=src/opnsense/mvc/app/models
-WIDGETDIR=src/opnsense/www/js/widgets
+ACLDIR=src/yetisense/mvc/app/models
+WIDGETDIR=src/yetisense/www/js/widgets
 
 ACLS=$(
 	if [ -d ${ACLDIR} ]; then find -s ${ACLDIR} -name "ACL.xml"; fi

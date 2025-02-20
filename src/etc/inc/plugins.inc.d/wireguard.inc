@@ -29,7 +29,7 @@
 
 function wireguard_enabled()
 {
-    return (string)(new \OPNsense\Wireguard\General())->enabled == '1';
+    return (string)(new \YETIsense\Wireguard\General())->enabled == '1';
 }
 
 function wireguard_services()
@@ -40,7 +40,7 @@ function wireguard_services()
         return $services;
     }
 
-    foreach ((new OPNsense\Wireguard\Server())->servers->server->iterateItems() as $key => $node) {
+    foreach ((new YETIsense\Wireguard\Server())->servers->server->iterateItems() as $key => $node) {
         if (!empty((string)$node->enabled)) {
             $services[] = [
                 'description' => 'WireGuard ' . htmlspecialchars($node->name),
@@ -91,7 +91,7 @@ function wireguard_xmlrpc_sync()
     $result = [];
 
     $result['id'] = 'wireguard';
-    $result['section'] = 'OPNsense.wireguard';
+    $result['section'] = 'YETIsense.wireguard';
     $result['description'] = gettext('WireGuard');
     $result['services'] = ['wireguard'];
 
@@ -101,7 +101,7 @@ function wireguard_xmlrpc_sync()
 function wireguard_devices()
 {
     $names = [];
-    foreach ((new OPNsense\Wireguard\Server())->servers->server->iterateItems() as $key => $node) {
+    foreach ((new YETIsense\Wireguard\Server())->servers->server->iterateItems() as $key => $node) {
         if (!empty((string)$node->enabled)) {
             $names[(string)$node->interface] = [
                 'descr' => sprintf('%s (WireGuard - %s)', (string)$node->interface, (string)$node->name),
@@ -122,7 +122,7 @@ function wireguard_devices()
 
 function wireguard_prepare($device)
 {
-    foreach ((new OPNsense\Wireguard\Server())->servers->server->iterateItems() as $node) {
+    foreach ((new YETIsense\Wireguard\Server())->servers->server->iterateItems() as $node) {
         if ($device != (string)$node->interface) {
             continue;
         }
@@ -169,7 +169,7 @@ function wireguard_sync($verbose = false)
     }
 
     $instances = [];
-    foreach ((new OPNsense\Wireguard\Server())->servers->server->iterateItems() as $node) {
+    foreach ((new YETIsense\Wireguard\Server())->servers->server->iterateItems() as $node) {
         if (!empty((string)$node->enabled)) {
             $instances[(string)$node->interface] = (string)$node->cnfFilename;
         }
