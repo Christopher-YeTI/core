@@ -50,14 +50,14 @@
 .grid-stack-item-content {
   text-align: center;
   border-style: solid;
-  border-color: rgba(192, 62, 20, 0.15);
+  border-color: #bf0505;
   border-width: 2px;
   background-color: #101218;
 }
 
 .widget-error {
   margin: 50px;
-  color: #721c24;
+  color: #bf0505;
 }
 
 .widget-content {
@@ -136,7 +136,7 @@ td {
   display: inline-block;
   height: 1px;
   width: 70%;
-  background: #C03E14;
+  background: red;
   margin: 5px;
 }
 
@@ -261,14 +261,14 @@ div {
   display: flex;
   flex-flow: row wrap;
   padding: 0.5em 0.5em;
-  border-top: solid 1px rgba(192, 62, 20, 0.15);
+  border-top: solid 1px #bf0505;
 }
 
 .flextable-row {
   display: flex;
   flex-flow: row wrap;
   padding: 0.5em 0.5em;
-  border-top: solid 1px rgba(192, 62, 20, 0.15);
+  border-top: solid 1px #bf0505;
   align-items: center;
 }
 
@@ -298,7 +298,7 @@ div {
   width: 100%;
   padding: 0;
   border: 0;
-  border-top: rgba(192, 62, 20, 0.15);
+  border-top: #bf0505;
 }
 
 .column .flex-cell:hover {
@@ -311,7 +311,7 @@ div {
 }
 
 .column .flex-cell:not(:last-child) {
-  border-bottom: solid 1px rgba(192, 62, 20, 0.15);
+  border-bottom: solid 1px #bf0505;
 }
 
 /* ----- */
@@ -324,7 +324,7 @@ div {
 .grid-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  border-top: 1px solid rgba(192, 62, 20, 0.15);
+  border-top: 1px solid #bf0505;
   opacity: 0.4;
 }
 
@@ -333,7 +333,7 @@ div {
 }
 
 .grid-header {
-  border-top: 1px solid rgba(192, 62, 20, 0.15);
+  border-top: 1px solid #bf0505;
   font-weight: bold;
 }
 

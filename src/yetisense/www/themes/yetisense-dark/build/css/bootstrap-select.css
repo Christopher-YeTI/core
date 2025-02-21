@@ -116,7 +116,7 @@ select.selectpicker {
 .error .bootstrap-select .dropdown-toggle,
 .bootstrap-select.is-invalid .dropdown-toggle,
 .was-validated .bootstrap-select select:invalid + .dropdown-toggle {
-  border-color: #b94a48;
+  border-color: #bf0505;
 }
 
 .bootstrap-select.is-valid .dropdown-toggle,

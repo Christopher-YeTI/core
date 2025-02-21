@@ -15,16 +15,16 @@
   justify-content: flex-start;
   border-radius: 0.3em;
   margin: auto;
-  border: 1px solid rgba(217, 79, 0, 0.2);
+  border: 1px solid red;
 }
 
 .stats-icon {
   height: auto;
   width: 50%;
   object-fit: cover;
-  background: rgba(217, 79, 0, 0.2);
+  background: red;
   border-radius: 0 2em 2em 0/0 3em 3em 0;
-  box-shadow: 3px 5px 1px 3px rgba(217, 79, 0, 0.25);
+  box-shadow: 3px 5px 1px 3px rgba(217, 0, 0, 0.877);
 }
 
 .large-icon {
@@ -135,15 +135,15 @@
 }
 
 .query-danger {
-  background-color: #C5705D;
+  background-color: red;
 }
 
 .query-warning {
-  background-color: #E8B86D;
+  background-color: red;
 }
 
 .query-error {
-  background-color: #cf6679;
+  background-color: red;
 }
 
 #searchFilter {
